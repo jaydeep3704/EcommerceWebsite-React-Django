@@ -9,6 +9,14 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+#RAZOR PAY CONFIG
+RAZORPAY_KEY_ID=os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET=os.environ.get("RAZORPAY_KEY_SECRET")
+
+
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -35,7 +43,8 @@ INSTALLED_APPS = [
     'cart',
     'rest_framework_simplejwt',
     'users',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    'accounts'
     
 ]
 

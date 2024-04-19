@@ -1,0 +1,8 @@
+Django
+djangorestframework
+pillow
+django-rest-framework-simplejwt
+python-dotenv
+setuptools
+razorpay
+environ

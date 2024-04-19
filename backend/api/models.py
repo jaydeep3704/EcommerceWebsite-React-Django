@@ -29,7 +29,7 @@ class Product(models.Model):
     product_name=models.CharField(max_length=200)      
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
     image=models.ImageField(blank=True,null=True,upload_to='images/products')
-    quantity=models.IntegerField(default=30)
+    quantity=models.IntegerField(default=0)
     price=models.CharField(max_length=20)
     color=models.ForeignKey(Color_Variant,on_delete=models.PROTECT,blank=True,null=True)
     description=models.TextField()

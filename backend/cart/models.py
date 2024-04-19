@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save,post_save
 from django.dispatch import receiver
 
 
+
 class Cart(models.Model):
     user=models.ForeignKey(NewUser,on_delete=models.CASCADE)
     ordered=models.BooleanField(default=False)
@@ -25,6 +26,8 @@ class CartItems(models.Model):
         return str(self.user.user_name)+" "+(self.product.product_name)
         
     
+    
+    
 @receiver(pre_save, sender=CartItems)
 def my_handler(sender, **kwargs):
     cart_items=kwargs['instance']
@@ -39,3 +42,17 @@ def my_handler(sender, **kwargs):
     cart=Cart.objects.get(user=cart_items.user)
     cart.total_price=total_cart_price
     cart.save()
+    
+class Orders(models.Model):
+    user=models.ForeignKey(NewUser,on_delete=models.CASCADE)
+    cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
+    amount=models.FloatField(default=0)
+    is_paid=models.BooleanField(default=False)
+    order_id=models.CharField(max_length=150,blank=True)
+    payment_id=models.CharField(max_length=150 , blank=True)
+    payment_signature=models.CharField(max_length=150,blank=True)
+    
+class OrderedItems(models.Model):
+    user=models.ForeignKey(NewUser,on_delete=models.CASCADE)
+    order=models.ForeignKey(Orders,on_delete=models.CASCADE)
+    

@@ -4,6 +4,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+from users.serializers import *
+
 
 
 class CartView(APIView):
@@ -66,7 +71,7 @@ class CartView(APIView):
         cart_item.save()
         
         cart=Cart.objects.filter(user=user,ordered=False).first()
-        cart_items=CartItems.objects.filter(cart=cart,user=user)
+        cart_items=CartItems.objects.filter(user=user,cart=cart)
          
         total_price=0
         for items in cart_items:
@@ -80,3 +85,16 @@ class CartView(APIView):
         
         return Response({'sucess':'Items Updated'})
     
+    
+    
+
+
+class OrderAPI(APIView,LoginRequiredMixin):
+  
+    def get(self,request):
+        queryset=Orders.objects.filter(user=request.user)
+        serializer=OrderSerializer(queryset,many=True)
+        return Response(serializer.data)
+ 
+
+   
